@@ -1,0 +1,17 @@
+"project_id_env": "CROWDIN_PROJECT_ID"
+"api_token_env": "CROWDIN_PERSONAL_TOKEN"
+"base_path": "."
+"base_url": "https://mindly.api.crowdin.com"
+"preserve_hierarchy": true
+"pull_request_title": "Crowdin PR"
+
+files: [
+  {
+    "source": "src/langs/uk.json",
+    "translation": "src/langs/%two_letters_code%.json",
+  },
+  {
+    "source": "public/locales/uk/**/*.json",
+    "translation": "public/locales/%two_letters_code%/**/%original_file_name%.json",
+  }
+]
