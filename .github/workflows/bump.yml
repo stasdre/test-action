@@ -12,6 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Bump version
+        run: |
+          node bump-version.js
+
       - name: Synchronize with Crowdin
         uses: crowdin/github-action@v1
         with:
@@ -31,15 +39,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-      - name: Set up Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - name: Bump version
-        run: |
-          node bump-version.js
-      - name: Set up Git and commit changes
-        run: |
-          git add .
-          git commit -m "Bump version"
-          git push
