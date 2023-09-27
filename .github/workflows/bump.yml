@@ -1,21 +1,38 @@
-name: Test BUmp version
+name: Crowdin Download
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
+
+permissions: write-all
 
 jobs:
-  deploy:
-    name: BUmp
+  crowdin:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Synchronize with Crowdin
+        uses: crowdin/github-action@v1
+        with:
+          upload_sources: false
+          upload_translations: false
+          download_translations: true
+          localization_branch_name: l10n_crowdin_translations
+
+          create_pull_request: true
+          pull_request_title: 'New Crowdin translations'
+          pull_request_body: 'New Crowdin pull request with translations'
+          pull_request_base_branch_name: 'main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
       - name: Set up Node
         uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: Notify slack
+      - name: Bump version
         run: |
           node bump-version.js
       - name: Set up Git and commit changes
