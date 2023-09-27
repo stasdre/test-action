@@ -1,7 +1,8 @@
 {
   "name": "test-action",
   "private": true,
-  "version": "0.0.0",
+  "version": "8.22.0",
+  "code-version": "584",
   "type": "module",
   "scripts": {
     "dev": "vite",
