@@ -1,0 +1,21 @@
+name: Test BUmp version
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: BUmp
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify slack
+        run: |
+          node bump-version.js
+      - name: Set up Git and commit changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Bump version"
+          git push
